@@ -1,0 +1,52 @@
+# Visual Studio / .NET
+.vs/
+.idea/
+.vscode/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build and test outputs
+artifacts/
+TestExports/
+Tests/InstallerSmokeLogs/
+*.log
+*.trx
+TestResults/
+
+# Local tool installations and historical packages
+Tools/
+发布版/
+安装程序/
+别离检测工具-单文件版/
+别离检测工具-发布版/
+别离检测工具-多文件发布版-v*/
+
+# Generated binaries and packages
+*.exe
+*.dll
+*.pdb
+*.zip
+*.msi
+*.msix
+*.appx
+*.nupkg
+
+# Signing material and local settings
+*.pfx
+*.p12
+*.cer
+*.key
+*.snk
+settings.json
+secrets*.json
+.env
+.env.*
+
+# Operating-system files
+Thumbs.db
+Desktop.ini
+.DS_Store
