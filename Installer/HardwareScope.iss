@@ -8,6 +8,9 @@
 #ifndef InstallerOutputDir
 #define InstallerOutputDir "..\安装程序"
 #endif
+#ifndef InstallerBaseFilename
+#define InstallerBaseFilename "别离检测工具_安装程序_v" + MyAppVersion
+#endif
 #define MyAppPublisher "别离检测工具开源项目"
 #define MyAppExeName "别离检测工具.exe"
 
@@ -24,7 +27,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 AllowNoIcons=yes
 OutputDir={#InstallerOutputDir}
-OutputBaseFilename=别离检测工具_安装程序_v{#MyAppVersion}
+OutputBaseFilename={#InstallerBaseFilename}
 SetupIconFile=..\Assets\app-icon.ico
 Compression=lzma2/max
 SolidCompression=yes

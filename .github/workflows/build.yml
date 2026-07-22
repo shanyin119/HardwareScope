@@ -97,13 +97,14 @@ jobs:
           $installerDirectory = Join-Path $PWD "artifacts\installer"
           New-Item -ItemType Directory -Path $installerDirectory -Force | Out-Null
 
-          $zipPath = Join-Path $PWD "artifacts\别离检测工具_v${version}_win-x64.zip"
+          $zipPath = Join-Path $PWD "artifacts\HardwareScope-v${version}-win-x64.zip"
           Compress-Archive -Path ".\artifacts\publish\*" -DestinationPath $zipPath -CompressionLevel Optimal
 
           & $env:INNO_ISCC `
             "/DMyAppVersion=$version" `
             "/DPublishDir=$publishDirectory" `
             "/DInstallerOutputDir=$installerDirectory" `
+            "/DInstallerBaseFilename=HardwareScope-Setup-v$version" `
             ".\Installer\HardwareScope.iss"
           if ($LASTEXITCODE -ne 0) {
             throw "安装程序编译失败，退出代码：$LASTEXITCODE"
@@ -111,7 +112,7 @@ jobs:
 
           $assets = @(
             $zipPath,
-            (Join-Path $installerDirectory "别离检测工具_安装程序_v${version}.exe")
+            (Join-Path $installerDirectory "HardwareScope-Setup-v${version}.exe")
           )
           $hashLines = foreach ($asset in $assets) {
             $hash = (Get-FileHash -LiteralPath $asset -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -131,8 +132,8 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           path: |
-            artifacts/别离检测工具_v*_win-x64.zip
-            artifacts/installer/别离检测工具_安装程序_v*.exe
+            artifacts/HardwareScope-v*-win-x64.zip
+            artifacts/installer/HardwareScope-Setup-v*.exe
             artifacts/SHA256SUMS.txt
 
       - name: 创建 GitHub Release
@@ -142,8 +143,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$env:GITHUB_REF_NAME" `
-            ".\artifacts\别离检测工具_v${{ steps.version.outputs.version }}_win-x64.zip" `
-            ".\artifacts\installer\别离检测工具_安装程序_v${{ steps.version.outputs.version }}.exe" `
+            ".\artifacts\HardwareScope-v${{ steps.version.outputs.version }}-win-x64.zip" `
+            ".\artifacts\installer\HardwareScope-Setup-v${{ steps.version.outputs.version }}.exe" `
             ".\artifacts\SHA256SUMS.txt" `
             --verify-tag `
             --title "别离检测工具 ${{ steps.version.outputs.version }}" `
